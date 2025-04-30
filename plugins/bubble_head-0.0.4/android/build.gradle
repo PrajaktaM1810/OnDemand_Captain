@@ -1,0 +1,38 @@
+group 'com.dsaved.bubblehead.bubble'
+version '1.0'
+
+buildscript {
+    ext.kotlin_version = '1.5.20'
+
+    repositories {
+        google()
+        mavenCentral()
+    }
+
+    dependencies {
+        classpath 'com.android.tools.build:gradle:8.1.0'
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+    }
+}
+
+rootProject.allprojects {
+    repositories {
+        google()
+        mavenCentral()
+    }
+}
+
+apply plugin: 'com.android.library'
+
+android {
+    namespace 'com.dsaved.bubblehead.bubble'
+    compileSdkVersion 34
+
+    defaultConfig {
+        minSdkVersion 23
+    }
+}
+
+dependencies {
+    implementation 'com.google.android.material:material:1.4.0'
+}
