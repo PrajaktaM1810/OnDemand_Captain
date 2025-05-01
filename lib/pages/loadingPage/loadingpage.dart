@@ -9,6 +9,7 @@ import '../../functions/functions.dart';
 import 'package:http/http.dart' as http;
 import '../../widgets/widgets.dart';
 import '../language/languages.dart';
+import '../login/landingpage.dart';
 import '../login/login.dart';
 import '../login/requiredinformation.dart';
 import '../noInternet/nointernet.dart';
@@ -44,18 +45,18 @@ class _LoadingPageState extends State<LoadingPage> {
         Navigator.pushAndRemoveUntil(
             context,
             MaterialPageRoute(builder: (context) => const RidePage()),
-            (route) => false);
+                (route) => false);
       } else if (userDetails['role'] != 'owner' &&
           userDetails['enable_bidding'] == false) {
         Navigator.pushAndRemoveUntil(
             context,
             MaterialPageRoute(builder: (context) => const Maps()),
-            (route) => false);
+                (route) => false);
       } else {
         Navigator.pushAndRemoveUntil(
             context,
             MaterialPageRoute(builder: (context) => const Maps()),
-            (route) => false);
+                (route) => false);
       }
     } else {
       Navigator.pushReplacement(context,
@@ -68,8 +69,6 @@ class _LoadingPageState extends State<LoadingPage> {
     getLanguageDone();
     getOwnermodule();
     getLandingImages();
-    choosenLanguage = 'en';
-    languageDirection = 'ltr';
     super.initState();
   }
 
@@ -146,7 +145,7 @@ class _LoadingPageState extends State<LoadingPage> {
                     Navigator.pushReplacement(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => const Login()));
+                            builder: (context) => const LandingPage()));
                   });
                 } else {
                   ischeckownerordriver = 'driver';
@@ -160,7 +159,7 @@ class _LoadingPageState extends State<LoadingPage> {
                   Navigator.pushAndRemoveUntil(
                       context,
                       MaterialPageRoute(builder: (context) => const Maps()),
-                      (route) => false);
+                          (route) => false);
                 });
               }
             });
@@ -246,77 +245,77 @@ class _LoadingPageState extends State<LoadingPage> {
 
             (updateAvailable == true)
                 ? Positioned(
-                    top: 0,
-                    child: Container(
-                      height: media.height * 1,
-                      width: media.width * 1,
-                      color: Colors.transparent.withOpacity(0.6),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Container(
-                              width: media.width * 0.9,
-                              padding: EdgeInsets.all(media.width * 0.05),
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(12),
-                                color: page,
+                top: 0,
+                child: Container(
+                  height: media.height * 1,
+                  width: media.width * 1,
+                  color: Colors.transparent.withOpacity(0.6),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Container(
+                          width: media.width * 0.9,
+                          padding: EdgeInsets.all(media.width * 0.05),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(12),
+                            color: page,
+                          ),
+                          child: Column(
+                            children: [
+                              SizedBox(
+                                  width: media.width * 0.8,
+                                  child: MyText(
+                                    text:
+                                    'New version of this app is available in store, please update the app for continue using',
+                                    size: media.width * sixteen,
+                                    fontweight: FontWeight.w600,
+                                  )),
+                              SizedBox(
+                                height: media.width * 0.05,
                               ),
-                              child: Column(
-                                children: [
-                                  SizedBox(
-                                      width: media.width * 0.8,
-                                      child: MyText(
-                                        text:
-                                            'New version of this app is available in store, please update the app for continue using',
-                                        size: media.width * sixteen,
-                                        fontweight: FontWeight.w600,
-                                      )),
-                                  SizedBox(
-                                    height: media.width * 0.05,
-                                  ),
-                                  Button(
-                                      onTap: () async {
-                                        if (platform ==
-                                            TargetPlatform.android) {
-                                          openBrowser(
-                                              'https://play.google.com/store/apps/details?id=${_package.packageName}');
-                                        } else {
-                                          setState(() {
-                                            _isLoading = true;
-                                          });
-                                          var response = await http.get(Uri.parse(
-                                              'http://itunes.apple.com/lookup?bundleId=${_package.packageName}'));
-                                          if (response.statusCode == 200) {
-                                            openBrowser(jsonDecode(
-                                                    response.body)['results'][0]
-                                                ['trackViewUrl']);
-                                          }
+                              Button(
+                                  onTap: () async {
+                                    if (platform ==
+                                        TargetPlatform.android) {
+                                      openBrowser(
+                                          'https://play.google.com/store/apps/details?id=${_package.packageName}');
+                                    } else {
+                                      setState(() {
+                                        _isLoading = true;
+                                      });
+                                      var response = await http.get(Uri.parse(
+                                          'http://itunes.apple.com/lookup?bundleId=${_package.packageName}'));
+                                      if (response.statusCode == 200) {
+                                        openBrowser(jsonDecode(
+                                            response.body)['results'][0]
+                                        ['trackViewUrl']);
+                                      }
 
-                                          setState(() {
-                                            _isLoading = false;
-                                          });
-                                        }
-                                      },
-                                      text: 'Update')
-                                ],
-                              ))
-                        ],
-                      ),
-                    ))
+                                      setState(() {
+                                        _isLoading = false;
+                                      });
+                                    }
+                                  },
+                                  text: 'Update')
+                            ],
+                          ))
+                    ],
+                  ),
+                ))
                 : Container(),
             //internet is not connected
             (internet == false)
                 ? Positioned(
-                    top: 0,
-                    child: NoInternet(
-                      onTap: () {
-                        //try again
-                        setState(() {
-                          internetTrue();
-                          getLanguageDone();
-                        });
-                      },
-                    ))
+                top: 0,
+                child: NoInternet(
+                  onTap: () {
+                    //try again
+                    setState(() {
+                      internetTrue();
+                      getLanguageDone();
+                    });
+                  },
+                ))
                 : Container(),
 
             //loader

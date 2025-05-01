@@ -77,7 +77,7 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
   }
 
   final Bubble _bubble =
-      Bubble(showCloseButton: false, allowDragToClose: false);
+  Bubble(showCloseButton: false, allowDragToClose: false);
   Future<void> startBubbleHead() async {
     try {
       await _bubble.startBubbleHead(sendAppToBackground: false);

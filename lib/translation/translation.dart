@@ -420,7 +420,7 @@ Map<String, dynamic> languages = {
     "text_profile": "Profile",
     "text_profile_para":
         "To accept the application, we need identification that prove the eligibility of the applicant to provide the service.",
-    "text_car_info": "Car Information",
+    "text_car_info": "Vehicle Information",
     "text_car_info_para":
         "To accept the application, we need identification that prove the eligibility of the applicant to provide the service.",
     "text_docs": "Document",
@@ -6493,9 +6493,9 @@ Map<String, dynamic> languages = {
     "text_end_all": "Terminar tudo",
     "text_end_stop": "Termine esta parada",
     "text_end_trip_desc":
-        "Você adicionou mais 3 paradas. Gostaria de encerrar a viagem para todas elas?",
+    "Você adicionou mais 3 paradas. Gostaria de encerrar a viagem para todas elas?",
     "text_new_trip_req": "Nova viagem solicitada",
     "text_new_trip_req_bid":
-        "Nova viagem solicitada, você pode licitar ou rejeitar a solicitação"
+    "Nova viagem solicitada, você pode licitar ou rejeitar a solicitação"
   }
 };

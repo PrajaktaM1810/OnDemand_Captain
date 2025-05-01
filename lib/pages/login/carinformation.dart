@@ -481,103 +481,206 @@ class _CarInformationState extends State<CarInformation> {
                                                                 ),
                                                               ),
                                                             ),
-                                                            Container(
-                                                              margin: EdgeInsets.only(
-                                                                  top: media.width *
-                                                                      0.025,
-                                                                  right: media.width *
-                                                                      0.01),
-                                                              width: media.width * 0.25,
-                                                              child: InkWell(
-                                                                onTap: () {
-                                                                  FocusManager.instance
-                                                                      .primaryFocus
-                                                                      ?.unfocus();
-                                                                  setState(() {
-                                                                    transportType =
-                                                                    'both';
-                                                                    myVehicleId = '';
-                                                                    vehicleMakeId = '';
-                                                                    vehicleModelId = '';
-                                                                    myServiceId = '';
-                                                                    custommakecontroller
-                                                                        .clear();
-                                                                    custommodelcontroller
-                                                                        .clear();
-                                                                    choosevehicletypelist
-                                                                        .clear();
-                                                                    numbercontroller
-                                                                        .clear();
-                                                                    colorcontroller
-                                                                        .clear();
-                                                                    modelcontroller
-                                                                        .clear();
-                                                                    referralcontroller
-                                                                        .clear();
-                                                                    choosevehicletypelistlocal
-                                                                        .clear();
-                                                                    vehicleConfirmed =
-                                                                    false;
-                                                                  });
-                                                                },
-                                                                child: Row(
-                                                                  children: [
-                                                                    Container(
-                                                                      height:
-                                                                      media.width *
-                                                                          0.05,
-                                                                      width:
-                                                                      media.width *
-                                                                          0.05,
-                                                                      decoration: BoxDecoration(
-                                                                          border: Border.all(
-                                                                              color:
-                                                                              whiteText,
-                                                                              width:
-                                                                              1.2)),
-                                                                      child: (transportType ==
-                                                                          'both')
-                                                                          ? Center(
-                                                                          child:
-                                                                          Icon(
-                                                                            Icons
-                                                                                .done,
-                                                                            color:
-                                                                            whiteText,
-                                                                            size: media
-                                                                                .width *
-                                                                                0.04,
-                                                                          ))
-                                                                          : Container(),
-                                                                    ),
-                                                                    SizedBox(
-                                                                      width:
-                                                                      media.width *
-                                                                          0.025,
-                                                                    ),
-                                                                    SizedBox(
-                                                                      width:
-                                                                      media.width *
-                                                                          0.15,
-                                                                      child: MyText(
-                                                                        text: languages[
-                                                                        choosenLanguage]
-                                                                        [
-                                                                        'text_both'],
-                                                                        size: media
-                                                                            .width *
-                                                                            fourteen,
-                                                                        fontweight:
-                                                                        FontWeight
-                                                                            .w600,
-                                                                        color:
-                                                                        whiteText,
-                                                                      ),
-                                                                    ),
-                                                                  ],
-                                                                ),
-                                                              ),
-                                                            ),
+                                                            // Container(
+                                                            //   margin: EdgeInsets.only(
+                                                            //       top: media.width *
+                                                            //           0.025,
+                                                            //       right: media.width *
+                                                            //           0.01),
+                                                            //   width: media.width * 0.25,
+                                                            //   child: InkWell(
+                                                            //     onTap: () {
+                                                            //       FocusManager.instance
+                                                            //           .primaryFocus
+                                                            //           ?.unfocus();
+                                                            //       setState(() {
+                                                            //         transportType =
+                                                            //         'both';
+                                                            //         myVehicleId = '';
+                                                            //         vehicleMakeId = '';
+                                                            //         vehicleModelId = '';
+                                                            //         myServiceId = '';
+                                                            //         custommakecontroller
+                                                            //             .clear();
+                                                            //         custommodelcontroller
+                                                            //             .clear();
+                                                            //         choosevehicletypelist
+                                                            //             .clear();
+                                                            //         numbercontroller
+                                                            //             .clear();
+                                                            //         colorcontroller
+                                                            //             .clear();
+                                                            //         modelcontroller
+                                                            //             .clear();
+                                                            //         referralcontroller
+                                                            //             .clear();
+                                                            //         choosevehicletypelistlocal
+                                                            //             .clear();
+                                                            //         vehicleConfirmed =
+                                                            //         false;
+                                                            //       });
+                                                            //     },
+                                                            //     child: Row(
+                                                            //       children: [
+                                                            //         Container(
+                                                            //           height:
+                                                            //           media.width *
+                                                            //               0.05,
+                                                            //           width:
+                                                            //           media.width *
+                                                            //               0.05,
+                                                            //           decoration: BoxDecoration(
+                                                            //               border: Border.all(
+                                                            //                   color:
+                                                            //                   whiteText,
+                                                            //                   width:
+                                                            //                   1.2)),
+                                                            //           child: (transportType ==
+                                                            //               'both')
+                                                            //               ? Center(
+                                                            //               child:
+                                                            //               Icon(
+                                                            //                 Icons
+                                                            //                     .done,
+                                                            //                 color:
+                                                            //                 whiteText,
+                                                            //                 size: media
+                                                            //                     .width *
+                                                            //                     0.04,
+                                                            //               ))
+                                                            //               : Container(),
+                                                            //         ),
+                                                            //         SizedBox(
+                                                            //           width:
+                                                            //           media.width *
+                                                            //               0.025,
+                                                            //         ),
+                                                            //         SizedBox(
+                                                            //           width:
+                                                            //           media.width *
+                                                            //               0.15,
+                                                            //           child: MyText(
+                                                            //             text: languages[
+                                                            //             choosenLanguage]
+                                                            //             [
+                                                            //             'text_both'],
+                                                            //             size: media
+                                                            //                 .width *
+                                                            //                 fourteen,
+                                                            //             fontweight:
+                                                            //             FontWeight
+                                                            //                 .w600,
+                                                            //             color:
+                                                            //             whiteText,
+                                                            //           ),
+                                                            //         ),
+                                                            //       ],
+                                                            //     ),
+                                                            //   ),
+                                                            // ),
+                                                            //
+
+                                                            // Container(
+                                                            //   margin: EdgeInsets.only(
+                                                            //       top: media.width *
+                                                            //           0.025,
+                                                            //       right: media.width *
+                                                            //           0.01),
+                                                            //   width: media.width * 0.25,
+                                                            //   child: InkWell(
+                                                            //     onTap: () {
+                                                            //       FocusManager.instance
+                                                            //           .primaryFocus
+                                                            //           ?.unfocus();
+                                                            //       setState(() {
+                                                            //         transportType =
+                                                            //         'goods';
+                                                            //         myVehicleId = '';
+                                                            //         vehicleMakeId = '';
+                                                            //         vehicleModelId = '';
+                                                            //         myServiceId = '';
+                                                            //         custommakecontroller
+                                                            //             .clear();
+                                                            //         custommodelcontroller
+                                                            //             .clear();
+                                                            //         choosevehicletypelist
+                                                            //             .clear();
+                                                            //         numbercontroller
+                                                            //             .clear();
+                                                            //         colorcontroller
+                                                            //             .clear();
+                                                            //         modelcontroller
+                                                            //             .clear();
+                                                            //         referralcontroller
+                                                            //             .clear();
+                                                            //         choosevehicletypelistlocal
+                                                            //             .clear();
+                                                            //         vehicleConfirmed =
+                                                            //         false;
+                                                            //       });
+                                                            //     },
+                                                            //     child: Row(
+                                                            //       children: [
+                                                            //         Container(
+                                                            //           height:
+                                                            //           media.width *
+                                                            //               0.05,
+                                                            //           width:
+                                                            //           media.width *
+                                                            //               0.05,
+                                                            //           decoration: BoxDecoration(
+                                                            //               border: Border.all(
+                                                            //                   color:
+                                                            //                   whiteText,
+                                                            //                   width:
+                                                            //                   1.2)),
+                                                            //           child: (transportType ==
+                                                            //               'goods')
+                                                            //               ? Center(
+                                                            //               child:
+                                                            //               Icon(
+                                                            //                 Icons
+                                                            //                     .done,
+                                                            //                 color:
+                                                            //                 whiteText,
+                                                            //                 size: media
+                                                            //                     .width *
+                                                            //                     0.04,
+                                                            //               ))
+                                                            //               : Container(),
+                                                            //         ),
+                                                            //         SizedBox(
+                                                            //           width:
+                                                            //           media.width *
+                                                            //               0.025,
+                                                            //         ),
+                                                            //         SizedBox(
+                                                            //           width:
+                                                            //           media.width *
+                                                            //               0.15,
+                                                            //           child: MyText(
+                                                            //             text: languages[
+                                                            //             choosenLanguage]
+                                                            //             [
+                                                            //             'Goods'],
+                                                            //             size: media
+                                                            //                 .width *
+                                                            //                 fourteen,
+                                                            //             fontweight:
+                                                            //             FontWeight
+                                                            //                 .w600,
+                                                            //             color:
+                                                            //             whiteText,
+                                                            //           ),
+                                                            //         ),
+                                                            //       ],
+                                                            //     ),
+                                                            //   ),
+                                                            // ),
+                                                            //
+
+
+
                                                           ],
                                                         ),
                                                       ),

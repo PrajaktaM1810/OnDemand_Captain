@@ -4,7 +4,7 @@ import '../../functions/functions.dart';
 import '../../styles/styles.dart';
 import '../../translation/translation.dart';
 import '../../widgets/widgets.dart';
-
+import '../login/landingpage.dart';
 
 class Languages extends StatefulWidget {
   const Languages({super.key});
@@ -25,7 +25,7 @@ class _LanguagesState extends State<Languages> {
     if (ownermodule == '1') {
       Future.delayed(const Duration(seconds: 2), () {
         Navigator.pushReplacement(context,
-            MaterialPageRoute(builder: (context) => const Login()));
+            MaterialPageRoute(builder: (context) => const LandingPage()));
       });
     } else {
       ischeckownerordriver = 'driver';
@@ -45,72 +45,80 @@ class _LanguagesState extends State<Languages> {
             ? TextDirection.rtl
             : TextDirection.ltr,
         child: Container(
-          padding: EdgeInsets.all(media.width * 0.05),
-          width: double.infinity,
-          height: double.infinity,
+          padding: EdgeInsets.fromLTRB(media.width * 0.05, media.width * 0.05,
+              media.width * 0.05, media.width * 0.05),
+          height: media.height * 1,
+          width: media.width * 1,
           color: page,
           child: Column(
             children: [
-              // Header
               Container(
-                padding: EdgeInsets.only(top: MediaQuery.of(context).padding.top),
                 height: media.width * 0.11 + MediaQuery.of(context).padding.top,
-                width: double.infinity,
-                alignment: Alignment.center,
-                child: MyText(
-                  text: (choosenLanguage.isEmpty)
-                      ? 'Choose Language'
-                      : languages[choosenLanguage]['text_choose_language'],
-                  size: media.width * sixteen,
-                  fontweight: FontWeight.bold,
+                width: media.width * 1,
+                padding:
+                EdgeInsets.only(top: MediaQuery.of(context).padding.top),
+                color: page,
+                child: Stack(
+                  children: [
+                    Container(
+                      height: media.width * 0.11,
+                      width: media.width * 1,
+                      alignment: Alignment.center,
+                      child: MyText(
+                        text: (choosenLanguage.isEmpty)
+                            ? 'Choose Language'
+                            : languages[choosenLanguage]
+                        ['text_choose_language'],
+                        size: media.width * sixteen,
+                        fontweight: FontWeight.bold,
+                      ),
+                    ),
+                  ],
                 ),
               ),
-
-              SizedBox(height: media.width * 0.05),
-
-              // Image
+              SizedBox(
+                height: media.width * 0.05,
+              ),
               SizedBox(
                 width: media.width * 0.9,
                 height: media.height * 0.16,
-                child: Image.asset('assets/images/selectLanguage.png', fit: BoxFit.contain),
+                child: Image.asset(
+                  'assets/images/selectLanguage.png',
+                  fit: BoxFit.contain,
+                ),
               ),
-
-              SizedBox(height: media.width * 0.1),
-
-              // Language List
+              SizedBox(
+                height: media.width * 0.1,
+              ),
               Expanded(
                 child: SingleChildScrollView(
-                  physics: BouncingScrollPhysics(),
+                  physics: const BouncingScrollPhysics(),
                   child: Column(
-                    children: languages.entries.map((entry) {
-                      final i = entry.key;
-                      return InkWell(
+                    children: languages
+                        .entries
+                        .where((entry) => entry.key == 'en') // Only show English
+                        .map(
+                          (entry) => InkWell(
                         onTap: () {
                           setState(() {
-                            choosenLanguage = i;
-                            languageDirection = ['ar', 'ur', 'iw'].contains(i) ? 'rtl' : 'ltr';
+                            choosenLanguage = entry.key;
+                            if (choosenLanguage == 'ar' ||
+                                choosenLanguage == 'ur' ||
+                                choosenLanguage == 'iw') {
+                              languageDirection = 'rtl';
+                            } else {
+                              languageDirection = 'ltr';
+                            }
                           });
                         },
                         child: Container(
-                          padding: EdgeInsets.symmetric(vertical: 12, horizontal: 8),
-                          margin: EdgeInsets.symmetric(vertical: 4),
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(8),
-                            color: Colors.white,
-                            boxShadow: [
-                              BoxShadow(
-                                color: Colors.black.withOpacity(0.05),
-                                blurRadius: 4,
-                                offset: Offset(0, 2),
-                              ),
-                            ],
-                          ),
+                          padding: EdgeInsets.all(media.width * 0.025),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               MyText(
                                 text: languagesCode
-                                    .firstWhere((e) => e['code'] == i)['name']
+                                    .firstWhere((e) => e['code'] == entry.key)['name']
                                     .toString(),
                                 size: media.width * sixteen,
                               ),
@@ -118,47 +126,45 @@ class _LanguagesState extends State<Languages> {
                                 height: media.width * 0.05,
                                 width: media.width * 0.05,
                                 decoration: BoxDecoration(
-                                  shape: BoxShape.circle,
-                                  border: Border.all(color: Color(0xff222222), width: 1.2),
-                                ),
+                                    shape: BoxShape.circle,
+                                    border: Border.all(
+                                        color: const Color(0xff222222),
+                                        width: 1.2)),
                                 alignment: Alignment.center,
-                                child: choosenLanguage == i
+                                child: (choosenLanguage == entry.key)
                                     ? Container(
                                   height: media.width * 0.03,
                                   width: media.width * 0.03,
-                                  decoration: BoxDecoration(
-                                    shape: BoxShape.circle,
-                                    color: Color(0xff222222),
-                                  ),
+                                  decoration: const BoxDecoration(
+                                      shape: BoxShape.circle,
+                                      color: Color(0xff222222)),
                                 )
-                                    : SizedBox.shrink(),
+                                    : Container(),
                               ),
                             ],
                           ),
                         ),
-                      );
-                    }).toList(),
+                      ),
+                    )
+                        .toList(),
                   ),
                 ),
               ),
-
-              SizedBox(height: 20),
-
-              // Confirm Button
-              if (choosenLanguage != '')
-                Button(
+              const SizedBox(height: 20),
+              (choosenLanguage != '')
+                  ? Button(
                   onTap: () async {
                     await getlangid();
+                    //saving language settings in local
                     pref.setString('languageDirection', languageDirection);
                     pref.setString('choosenLanguage', choosenLanguage);
                     navigate();
                   },
-                  text: languages[choosenLanguage]['text_confirm'],
-                ),
+                  text: languages[choosenLanguage]['text_confirm'])
+                  : Container(),
             ],
           ),
         ),
-
       ),
     );
   }
