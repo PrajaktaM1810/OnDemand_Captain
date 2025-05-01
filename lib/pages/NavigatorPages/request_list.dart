@@ -80,7 +80,7 @@ class _RequestListState extends State<RequestList> {
           acceptedRequests = userRequestsData.where((req) => req['status'] == 'accepted').toList();
           confirmedRequests = userRequestsData.where((req) => req['status'] == 'confirmed').toList();
           rejectedRequests = userRequestsData.where((req) => req['status'] == 'rejected' && req['reject_count'] == 3).toList();
-          betUpdateRequests = userRequestsData.where((req) => req['status'] == 'rejected' && (req['reject_count'] == null || req['reject_count'] < 3)).toList();
+          betUpdateRequests = userRequestsData.where((req) => req['status'] == 'Bet Update' && (req['reject_count'] == null || req['reject_count'] < 3)).toList();
           completedTrips = userRequestsData.where((req) => req['status'] == 'completed').toList();
 
           isLoading = false;
@@ -294,7 +294,7 @@ class _RequestListState extends State<RequestList> {
       case 'confirmed':
         return _buildRequestListContent(confirmedRequests, "confirmed");
       case 'bet_update':
-        return _buildRequestListContent(betUpdateRequests, "fare update");
+        return _buildRequestListContent(betUpdateRequests, "rejected");
       case 'rejected':
         return _buildRequestListContent(rejectedRequests, "rejected");
       case 'completed':
