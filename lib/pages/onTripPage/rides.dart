@@ -22,6 +22,7 @@ import '../navDrawer/nav_drawer.dart';
 import '../vehicleInformations/docs_onprocess.dart';
 import 'droplocation.dart';
 import 'map_page.dart';
+import '../login/landingpage.dart';
 
 class RidePage extends StatefulWidget {
   const RidePage({super.key});
@@ -93,7 +94,7 @@ class _RidePageState extends State<RidePage> with WidgetsBindingObserver {
       Future.delayed(const Duration(seconds: 2), () {
         Navigator.pushAndRemoveUntil(
             context,
-            MaterialPageRoute(builder: (context) => const Login()),
+            MaterialPageRoute(builder: (context) => const LandingPage()),
             (route) => false);
       });
     } else {
@@ -101,7 +102,7 @@ class _RidePageState extends State<RidePage> with WidgetsBindingObserver {
       Future.delayed(const Duration(seconds: 2), () {
         Navigator.pushAndRemoveUntil(
             context,
-            MaterialPageRoute(builder: (context) => const Login()),
+            MaterialPageRoute(builder: (context) => const LandingPage()),
             (route) => false);
       });
     }

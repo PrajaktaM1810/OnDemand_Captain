@@ -89,13 +89,10 @@ Map<String, dynamic> languages = {
     "text_subscription_list": "Subscription Plans",
     "text_target_list": "Targets",
     "text_reward_history": "Reward Histroy",
-    "text_rent_request": "Rent Request",
+    "text_rent_request": "Driver Request",
     "text_subscription_history": "Subscription History",
     "text_enable_wallet": "Wallet",
     "text_enable_referal": "Referral",
-
-
-
 
     "text_faq": "FAQ",
     "text_sos": "SOS",
@@ -548,7 +545,7 @@ Map<String, dynamic> languages = {
     "text_shipment_title": "Upload Shipment Proof",
     "text_owner": "Owner",
     "text_taxi": "Transport",
-    "text_delivery": "Delivery",
+    "text_delivery": "Goods",
     "text_waitingforpayment": "Waiting For Payment",
     "text_continue_with": "Continue with",
     "text_goto_url": "Goto URL",

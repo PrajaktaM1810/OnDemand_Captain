@@ -39,6 +39,7 @@ import 'package:flutter_map/flutter_map.dart' as fm;
 // ignore: depend_on_referenced_packages
 import 'package:latlong2/latlong.dart' as fmlt;
 import 'package:http/http.dart' as http;
+import '../login/landingpage.dart';
 
 class Maps extends StatefulWidget {
   const Maps({super.key});
@@ -239,7 +240,7 @@ class _MapsState extends State<Maps>
       Future.delayed(const Duration(seconds: 2), () {
         Navigator.pushAndRemoveUntil(
             context,
-            MaterialPageRoute(builder: (context) => const Login()),
+            MaterialPageRoute(builder: (context) => const LandingPage()),
             (route) => false);
       });
     } else {
@@ -247,7 +248,7 @@ class _MapsState extends State<Maps>
       Future.delayed(const Duration(seconds: 2), () {
         Navigator.pushAndRemoveUntil(
             context,
-            MaterialPageRoute(builder: (context) => const Login()),
+            MaterialPageRoute(builder: (context) => const LandingPage()),
             (route) => false);
       });
     }

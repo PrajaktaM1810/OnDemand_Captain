@@ -79,8 +79,8 @@ class _RequestListState extends State<RequestList> {
           pendingRequests = pendingData;
           acceptedRequests = userRequestsData.where((req) => req['status'] == 'accepted').toList();
           confirmedRequests = userRequestsData.where((req) => req['status'] == 'confirmed').toList();
-          rejectedRequests = userRequestsData.where((req) => req['status'] == 'rejected' && req['reject_count'] == 3).toList();
-          betUpdateRequests = userRequestsData.where((req) => req['status'] == 'Bet Update' && (req['reject_count'] == null || req['reject_count'] < 3)).toList();
+          rejectedRequests = userRequestsData.where((req) => req['status'] == 'rejected').toList();
+          betUpdateRequests = userRequestsData.where((req) => req['status'] == 'Bet Update').toList();
           completedTrips = userRequestsData.where((req) => req['status'] == 'completed').toList();
 
           isLoading = false;
@@ -212,29 +212,33 @@ class _RequestListState extends State<RequestList> {
       ),
       body: RefreshIndicator(
         onRefresh: _fetchRequests,
-        child: Column(
-          children: [
-            Container(
-              color: Colors.white,
-              padding: EdgeInsets.symmetric(vertical: 8),
-              child: SingleChildScrollView(
-                scrollDirection: Axis.horizontal,
-                child: Row(
-                  children: [
-                    _buildStatusButton('Pending', 'pending'),
-                    _buildStatusButton('Accepted', 'accepted'),
-                    _buildStatusButton('Confirmed', 'confirmed'),
-                    _buildStatusButton('Fare Update', 'bet_update'),
-                    _buildStatusButton('Rejected', 'rejected'),
-                    _buildStatusButton('Completed', 'completed'),
-                  ],
+        child: SingleChildScrollView(
+          physics: AlwaysScrollableScrollPhysics(),
+          child: Column(
+            children: [
+              Container(
+                color: Colors.white,
+                padding: EdgeInsets.symmetric(vertical: 8),
+                child: SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+                  child: Row(
+                    children: [
+                      _buildStatusButton('Pending', 'pending'),
+                      _buildStatusButton('Accepted', 'accepted'),
+                      _buildStatusButton('Confirmed', 'confirmed'),
+                      _buildStatusButton('Fare Update', 'bet_update'),
+                      _buildStatusButton('Rejected', 'rejected'),
+                      _buildStatusButton('Completed', 'completed'),
+                    ],
+                  ),
                 ),
               ),
-            ),
-            Expanded(
-              child: _buildContentForStatus(),
-            ),
-          ],
+              Container(
+                height: MediaQuery.of(context).size.height * 0.8,
+                child: _buildContentForStatus(),
+              ),
+            ],
+          ),
         ),
       ),
     );
@@ -281,7 +285,6 @@ class _RequestListState extends State<RequestList> {
           ),
         ),
       ),
-
     );
   }
 
@@ -294,7 +297,7 @@ class _RequestListState extends State<RequestList> {
       case 'confirmed':
         return _buildRequestListContent(confirmedRequests, "confirmed");
       case 'bet_update':
-        return _buildRequestListContent(betUpdateRequests, "rejected");
+        return _buildRequestListContent(betUpdateRequests, "bet_update");
       case 'rejected':
         return _buildRequestListContent(rejectedRequests, "rejected");
       case 'completed':
@@ -306,7 +309,7 @@ class _RequestListState extends State<RequestList> {
 
   Widget _buildRequestListContent(List<Map<String, dynamic>> requests, String status) {
     return isLoading ? _buildShimmerLoader() :
-    requests.isEmpty ? _buildEmptyMessage("No ${status} request") :
+    requests.isEmpty ? _buildEmptyMessage(status == "bet_update" ? "No fare update request" : "No ${status} request") :
     _buildRequestList(requests, status: status);
   }
 
@@ -319,6 +322,7 @@ class _RequestListState extends State<RequestList> {
   Widget _buildRequestList(List<Map<String, dynamic>> list, {required String status}) {
     return ListView.builder(
       padding: EdgeInsets.only(top: 8),
+      physics: AlwaysScrollableScrollPhysics(),
       itemCount: list.length,
       itemBuilder: (context, index) {
         return _buildRequestCard(list[index], status: status);
@@ -328,11 +332,31 @@ class _RequestListState extends State<RequestList> {
 
   Widget _buildRequestCard(Map<String, dynamic> data, {required String status}) {
     Color statusColor = Colors.grey;
-    if (status == "pending") statusColor = Colors.orange;
-    else if (status == "accepted") statusColor = Colors.blue;
-    else if (status == "confirmed") statusColor = Colors.green;
-    else if (status == "rejected" || status == "bet_update") statusColor = Colors.red;
-    else if (status == "completed") statusColor = Colors.green;
+    String statusText = status.toUpperCase();
+    if (status == "pending") {
+      statusColor = Colors.orange;
+      statusText = "PENDING";
+    }
+    else if (status == "accepted") {
+      statusColor = Colors.blue;
+      statusText = "ACCEPTED";
+    }
+    else if (status == "confirmed") {
+      statusColor = Colors.green;
+      statusText = "CONFIRMED";
+    }
+    else if (status == "rejected") {
+      statusColor = Colors.red;
+      statusText = "REJECTED";
+    }
+    else if (status == "bet_update") {
+      statusColor = Colors.red;
+      statusText = "REJECTED";
+    }
+    else if (status == "completed") {
+      statusColor = Colors.green;
+      statusText = "COMPLETED";
+    }
 
     final endDate = DateTime.parse(data['end_date']);
     final today = DateTime.now();
@@ -379,7 +403,7 @@ class _RequestListState extends State<RequestList> {
                       borderRadius: BorderRadius.circular(20),
                     ),
                     child: Text(
-                      status == "bet_update" ? "REJECTED" : status.toUpperCase(),
+                      statusText,
                       style: TextStyle(
                         color: statusColor,
                         fontSize: 12,
@@ -521,6 +545,7 @@ class _RequestListState extends State<RequestList> {
       highlightColor: Colors.grey[100]!,
       child: ListView.builder(
         padding: EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+        physics: AlwaysScrollableScrollPhysics(),
         itemCount: 3,
         itemBuilder: (_, __) => Card(
           margin: EdgeInsets.symmetric(vertical: 8),
