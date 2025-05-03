@@ -3669,13 +3669,14 @@ Future<String> subscribePackage(int driverId, int packageId, String trId, String
     };
 
     print('Request Headers: $headers');
-    print('Request Parameters: {driver_id: $driverId, package_id: $packageId, tr_id: $trId, amount: $amount}');
 
     var response = await http.post(
       Uri.parse('${url}api/v1/request/subscribe-Package'),
       headers: headers,
-      body: jsonEncode({'driver_id': driverId, 'package_id': packageId, 'tr_id': trId, 'amount': amount}),
+      body: jsonEncode({'driver_id': driverId, 'package_id': packageId, 'transaction_id': trId, 'amount': amount}),
     );
+
+    print('Request Parameters: {driver_id: $driverId, package_id: $packageId, transaction_id: $trId, amount: $amount}');
 
     print('Response Status Code: ${response.statusCode}');
     print('Response Body: ${response.body}');

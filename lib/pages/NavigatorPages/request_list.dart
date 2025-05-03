@@ -80,9 +80,8 @@ class _RequestListState extends State<RequestList> {
           acceptedRequests = userRequestsData.where((req) => req['status'] == 'accepted').toList();
           confirmedRequests = userRequestsData.where((req) => req['status'] == 'confirmed').toList();
           rejectedRequests = userRequestsData.where((req) => req['status'] == 'rejected').toList();
-          betUpdateRequests = userRequestsData.where((req) => req['status'] == 'Bet Update').toList();
+          betUpdateRequests = userRequestsData.where((req) => (req['status'] == 'Bet Update')).toList();
           completedTrips = userRequestsData.where((req) => req['status'] == 'completed').toList();
-
           isLoading = false;
         });
       }
@@ -105,6 +104,11 @@ class _RequestListState extends State<RequestList> {
     );
 
     try {
+      String status = 'accepted';
+      if (betUpdateRequests.contains(request)) {
+        status = 'Bet Update';
+      }
+
       print('=== REQUEST DETAILS ===');
       print('URL: https://admin.nxtdig.in/api/v1/request/updateDriverRequestStatus');
       print('Headers: ${{
@@ -114,7 +118,7 @@ class _RequestListState extends State<RequestList> {
       print('Request Body: ${{
         'driver_id': userDetails['id'].toString(),
         'request_id': request['id'].toString(),
-        'status': 'accepted',
+        'status': status,
         'expected_fare': fare,
       }}');
       final response = await http.post(
@@ -126,7 +130,7 @@ class _RequestListState extends State<RequestList> {
         body: json.encode({
           'driver_id': userDetails['id'].toString(),
           'request_id': request['id'].toString(),
-          'status': 'accepted',
+          'status': status,
           'expected_fare': fare,
         }),
       );
@@ -142,19 +146,19 @@ class _RequestListState extends State<RequestList> {
         print('Request accepted successfully');
         _fetchRequests();
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text("Ride accepted successfully")),
+          SnackBar(content: Text("Ride status updated successfully")),
         );
       } else {
         print('Failed to accept ride. Status code: ${response.statusCode}');
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text("Failed to accept ride")),
+          SnackBar(content: Text("Failed to update ride status")),
         );
       }
     } catch (e) {
       Navigator.pop(context);
       print('Error accepting ride: $e');
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text("Error accepting ride")),
+        SnackBar(content: Text("Error in update ride status")),
       );
     }
   }

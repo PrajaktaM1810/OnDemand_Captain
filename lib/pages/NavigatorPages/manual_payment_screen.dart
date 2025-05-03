@@ -60,40 +60,150 @@ class _ManualPaymentScreenState extends State<ManualPaymentScreen> {
     _showResponseDialog(response);
   }
 
-  void _showResponseDialog(String response) {
-    final Map<String, dynamic> jsonResponse = jsonDecode(response);
+  // void _showResponseDialog(String response) {
+  //   try {
+  //     // Try to parse as JSON first
+  //     final Map<String, dynamic> jsonResponse = jsonDecode(response);
+  //     final bool isSuccess = jsonResponse['success'] == true;
+  //     final bool isPending = isSuccess &&
+  //         jsonResponse['data'] != null &&
+  //         jsonResponse['data']['status'] == 'pending';
+  //
+  //     showDialog(
+  //       context: context,
+  //       builder: (context) => AlertDialog(
+  //         title: SizedBox(
+  //           width: 120,
+  //           height: 120,
+  //           child: Lottie.asset(
+  //             isPending ? 'assets/fail.json' :
+  //             isSuccess ? 'assets/success.json' :
+  //             'assets/fail.json',
+  //             fit: BoxFit.contain,
+  //           ),
+  //         ),
+  //         content: Text(
+  //           isPending ? "The request is in pending" :
+  //           isSuccess ? "Package Subscribed" :
+  //           jsonResponse['message'] ?? response, // Fallback to raw response
+  //         ),
+  //         actions: [
+  //           TextButton(
+  //             onPressed: () {
+  //               Navigator.pop(context);
+  //               Navigator.pushReplacement(
+  //                 context,
+  //                 MaterialPageRoute(builder: (context) => SubscriptionListScreen()),
+  //               );
+  //             },
+  //             child: const Text("OK"),
+  //           ),
+  //         ],
+  //       ),
+  //     );
+  //   } catch (e) {
+  //     // Fallback for non-JSON responses
+  //     showDialog(
+  //       context: context,
+  //       builder: (context) => AlertDialog(
+  //         title: SizedBox(
+  //           width: 120,
+  //           height: 120,
+  //           child: Lottie.asset(
+  //             'assets/success.json', // Assuming plain success message means success
+  //             fit: BoxFit.contain,
+  //           ),
+  //         ),
+  //         content: Text(response),
+  //         actions: [
+  //           TextButton(
+  //             onPressed: () {
+  //               Navigator.pop(context);
+  //               Navigator.pushReplacement(
+  //                 context,
+  //                 MaterialPageRoute(builder: (context) => SubscriptionListScreen()),
+  //               );
+  //             },
+  //             child: const Text("OK"),
+  //           ),
+  //         ],
+  //       ),
+  //     );
+  //   }
+  // }
 
-    showDialog(
-      context: context,
-      builder: (context) => AlertDialog(
-        title: SizedBox(
-          width: 120,
-          height: 120,
-          child: Lottie.asset(
-            jsonResponse['success']
-                ? 'assets/success.json'
-                : 'assets/fail.json',
-            fit: BoxFit.contain,
+  void _showResponseDialog(String response) {
+    try {
+      // Try to parse as JSON first
+      final Map<String, dynamic> jsonResponse = jsonDecode(response);
+      final bool isSuccess = jsonResponse['success'] == true;
+      final bool isPending = isSuccess &&
+          jsonResponse['data'] != null &&
+          jsonResponse['data']['status'] == 'pending';
+
+      showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+          title: SizedBox(
+            width: 120,
+            height: 120,
+            child: Lottie.asset(
+              isPending ? 'assets/fail.json' :
+              isSuccess ? 'assets/success.json' :
+              'assets/fail.json',
+              fit: BoxFit.contain,
+            ),
           ),
-        ),
-        content: Text(
-          jsonResponse['success'] ? "Package Subscribed" : jsonResponse['message'],
-        ),
-        actions: [
-          TextButton(
-            onPressed: () {
-              Navigator.pop(context);
-              Navigator.pushReplacement(
-                context,
-                MaterialPageRoute(builder: (context) => SubscriptionListScreen()),
-              );
-            },
-            child: const Text("OK"),
+          content: Text(
+            isPending ? "The request is in pending" :
+            isSuccess ? "Package Subscribed" :
+            jsonResponse['message'] ?? response, // Fallback to raw response
           ),
-        ],
-      ),
-    );
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.pop(context);
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(builder: (context) => SubscriptionListScreen()),
+                );
+              },
+              child: const Text("OK"),
+            ),
+          ],
+        ),
+      );
+    } catch (e) {
+      // Fallback for non-JSON responses
+      showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+          title: SizedBox(
+            width: 120,
+            height: 120,
+            child: Lottie.asset(
+              'assets/success.json', // Assuming plain success message means success
+              fit: BoxFit.contain,
+            ),
+          ),
+          content: Text(response),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.pop(context);
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(builder: (context) => SubscriptionListScreen()),
+                );
+              },
+              child: const Text("OK"),
+            ),
+          ],
+        ),
+      );
+    }
   }
+
 
   @override
   Widget build(BuildContext context) {
